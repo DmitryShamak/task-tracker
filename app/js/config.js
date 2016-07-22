@@ -8,7 +8,7 @@ module.exports = function($stateProvider, $urlRouterProvider, $locationProvider)
             url: "/",
             template: "<h1>Landing</h1>",
             data: {
-                pageTitle: 'landing'
+                pageTitle: 'Landing'
             },
             controller: "LandingCtrl"
         })

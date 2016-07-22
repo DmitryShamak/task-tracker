@@ -1,10 +1,16 @@
 var styles = require("./style/main.scss");
+var templates = {
+  navigation: require("./templates/navigation.temp"),
+  history: require("./templates/history.temp")
+};
 
 (function() {
     angular.module('app', ['ui.router', 'ngResource'])
         .config(require("./js/config.js"))
         .run(function($rootScope, $state, $injector, $location) {
-            console.info("config run");
+            $rootScope.$on('$stateChangeStart', function(event, toState) {
+                $rootScope.pageTitle = toState.data.pageTitle || "Tracker";
+            });
         })
         .controller('LandingCtrl', function ($scope, user) {
             console.log("landing run", user);
@@ -15,7 +21,13 @@ var styles = require("./style/main.scss");
         .directive('navigation', function() {
             return {
                 restrict: 'A',
-                template: '<a class="btn" href="/">Landing</a><a class="btn" href="/projects">Projects</a>'
+                template: templates.navigation
+            }
+        })
+        .directive('history', function() {
+            return {
+                restrict: 'A',
+                template: templates.history
             }
         })
         .factory('api', function() {

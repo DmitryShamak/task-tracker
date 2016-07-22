@@ -9,7 +9,13 @@ module.exports = {
         filename: "build.js"
     },
     module: {
-        loaders: [{ test: /\.scss$/i, loader: extractCSS.extract(['css','sass', "autoprefixer"]) }]
+        loaders: [{
+            test: /\.scss$/i,
+            loader: extractCSS.extract(['css','sass', "autoprefixer"])
+        },{
+            test: [/\.html$/, /\.temp$/],
+            loader: "html-loader"
+        }]
     },
     plugins: [
         extractCSS

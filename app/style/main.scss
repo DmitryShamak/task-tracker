@@ -1,4 +1,56 @@
-* {
+@import "variables.scss";
+
+html {
+  height: 100%;
+}
+
+body {
+  position: relative;
+
   margin: 0;
   padding: 0;
+
+  height: 100vh;
+  overflow: hidden;
+}
+
+[class*="text-"] {
+  &[class*="-bold"] {
+    font-weight: 600;
+  }
+}
+
+aside {
+  position: fixed;
+  top: 0; bottom: 0;
+  left: 0;
+
+  width: $navigationWidth;
+
+  border-right: $meduimBorderWidth solid $mainBorderColor;
+
+  background: $mainBgColor;
+  color: $mainTextColor;
+}
+
+main {
+  position: fixed;
+  top: 0; bottom: $footerHeight;
+  left: $navigationWidth; right: 0;
+
+  background: $mainBgColor;
+  color: $mainTextColor;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: $navigationWidth; right: 0;
+
+  height: $footerHeight;
+
+  border-top: $meduimBorderWidth solid $mainBorderColor;
+
+  background: $mainBgColor;
+  color: $mainTextColor;
 }

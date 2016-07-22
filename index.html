@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="/">
 
-    <title></title>
+    <title ng-bind="pageTitle"></title>
+
+    <link type="text/css" rel="stylesheet" href="/build/main.css" />
+    <link type="text/css" rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" />
 
     <script src="/bower_components/jquery/dist/jquery.min.js"></script>
 
@@ -14,9 +17,12 @@
     <script src="/bower_components/angular-resource/angular-resource.min.js"></script>
 </head>
 <body>
-    <aside navigation></aside>
-    <main ui-view id="content"></main>
-    <footer></footer>
+    <aside navigation class="clearfix"></aside>
+    <main class="clearfix">
+        <div id="header" history></div>
+        <div ui-view id="content"></div>
+    </main>
+    <footer class="clearfix"></footer>
 </body>
 <script src="/build/build.js"></script>
 </html>
