@@ -11,5 +11,13 @@ module.exports = function($stateProvider, $urlRouterProvider, $locationProvider)
                 pageTitle: 'landing'
             },
             controller: "LandingCtrl"
+        })
+        .state('projects', {
+            url: "/projects",
+            template: "<h1>Projects</h1>",
+            data: {
+                pageTitle: 'Projects'
+            },
+            controller: "LandingCtrl"
         });
 };
