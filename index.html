@@ -17,12 +17,11 @@
     <script src="/bower_components/angular-resource/angular-resource.min.js"></script>
 </head>
 <body>
-    <aside navigation class="clearfix"></aside>
-    <main class="clearfix">
-        <div id="header" history></div>
+    <aside navigation class="clearfix" ng-class="{hidden: !showNavigation}"></aside>
+    <main class="clearfix" ng-class="{hasFooter: showFooter, hasNavigation: showNavigation}">
         <div ui-view id="content"></div>
     </main>
-    <footer class="clearfix"></footer>
+    <footer class="clearfix" ng-class="{hidden: !showFooter}"></footer>
 </body>
 <script src="/build/build.js"></script>
 </html>

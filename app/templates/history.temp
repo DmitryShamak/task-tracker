@@ -1,2 +1,3 @@
-<a href="#">Landing</a>
-<a href="#">Project</a>
+<a ng-repeat="level in levels">
+    <span ng-bind="level.label"></span>
+</a>

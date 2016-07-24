@@ -1,23 +1,65 @@
 module.exports = function($stateProvider, $urlRouterProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
 
-    //jQuery.ajaxSetup({cache: true});
+    jQuery.ajaxSetup({cache: true});
+    var templates = {
+        landing: require("../html/landing.html"),
+        board: require("../html/board.html"),
+        ticket: require("../html/ticket.html")
+    };
 
     $stateProvider
         .state('landing', {
             url: "/",
-            template: "<h1>Landing</h1>",
+            template: templates.landing,
             data: {
                 pageTitle: 'Landing'
             },
             controller: "LandingCtrl"
         })
-        .state('projects', {
-            url: "/projects",
-            template: "<h1>Projects</h1>",
+        .state('board', {
+            url: "/board",
+            template: templates.board,
             data: {
-                pageTitle: 'Projects'
+                pageTitle: 'Board',
+                navigation: true,
+                footer: true,
+                level: 0
             },
-            controller: "LandingCtrl"
+            controller: "BoardCtrl"
+        })
+        .state('project', {
+            url: "/board/:projectId",
+            template: templates.board,
+            data: {
+                pageTitle: 'Project',
+                navigation: true,
+                footer: true,
+                level: 1
+            },
+            controller: "ProjectCtrl"
+        })
+        .state('ticket', {
+            url: "/board/:projectId/:ticketId",
+            template: templates.ticket,
+            data: {
+                pageTitle: 'Ticket',
+                navigation: true,
+                footer: true,
+                level: 1
+            },
+            controller: "TicketCtrl"
+        })
+        .state('ticket.edit', {
+            url: "/edit",
+            template: templates.ticket,
+            data: {
+                pageTitle: 'Ticket',
+                edit: true,
+                navigation: true,
+                footer: true,
+                level: 1
+            },
+            controller: "TicketCtrl"
         });
 };

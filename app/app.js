@@ -10,26 +10,22 @@ var templates = {
         .run(function($rootScope, $state, $injector, $location) {
             $rootScope.$on('$stateChangeStart', function(event, toState) {
                 $rootScope.pageTitle = toState.data.pageTitle || "Tracker";
+
+                $rootScope.showNavigation = toState.data.navigation || false;
+                $rootScope.showFooter = toState.data.footer || false;
             });
         })
-        .controller('LandingCtrl', function ($scope, user) {
-            console.log("landing run", user);
-            $scope.say = function(msg) {
-                console.info(msg);
-            };
-        })
+        .controller('LandingCtrl', require("./js/controller/landingCtrl.js"))
+        .controller('BoardCtrl', require("./js/controller/boardCtrl.js"))
+        .controller('ProjectCtrl', require("./js/controller/projectCtrl.js"))
+        .controller('TicketCtrl', require("./js/controller/ticketCtrl.js"))
         .directive('navigation', function() {
             return {
                 restrict: 'A',
                 template: templates.navigation
             }
         })
-        .directive('history', function() {
-            return {
-                restrict: 'A',
-                template: templates.history
-            }
-        })
+        .directive('history', require("./js/directive/history.js")(templates.history))
         .factory('api', function() {
             return require("./js/helpers/api.js");
         })

@@ -1,2 +1,3 @@
-<a class="btn" href="/">Landing</a>
-<a class="btn" href="/projects">Projects</a>
+<a class="btn" ui-sref="board">Board</a>
+
+<a class="btn" ui-sref="landing">Sign Out</a>

@@ -35,11 +35,49 @@ aside {
 
 main {
   position: fixed;
-  top: 0; bottom: $footerHeight;
-  left: $navigationWidth; right: 0;
+  top: 0; bottom: 0;
+  left: 0; right: 0;
+
+  &.hasNavigation {
+    left: $navigationWidth;
+  }
+  &.hasFooter {
+    bottom: $footerHeight;
+  }
 
   background: $mainBgColor;
   color: $mainTextColor;
+
+  #landing {
+    margin-top: 40vh;
+    .sign-in {
+      max-width: 300px;
+      margin: -90px auto;
+    }
+  }
+
+  #board {
+    .empty-item {
+      padding: 0 15px;
+    }
+
+    .board-item {
+      margin: 20px 0;
+
+      .btn-add {
+        line-height: 100px;
+        font-size: 3em;
+
+        cursor: pointer;
+      }
+
+      .content {
+        min-height: 100px;
+
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+    }
+  }
 }
 
 footer {
