@@ -8,7 +8,7 @@ module.exports = function ($scope, $state, $stateParams, api) {
     });
 
     $scope.getTicket = function() {
-        return api.getTicket({key: "ticket", projectId: $stateParams.projectId, id: $stateParams.ticketId});
+        return api.board.getTicket({key: "ticket", projectId: $stateParams.projectId, id: $stateParams.ticketId});
     };
 
     $scope.ticket = null;
@@ -26,7 +26,7 @@ module.exports = function ($scope, $state, $stateParams, api) {
 
     $scope.onSubmit = function(data) {
         //todo: Add validation
-        api.update({key: "ticket"}, data).then(function(result) {
+        api.board.update({key: "ticket"}, data).then(function(result) {
             $state.go("ticket", {projectId: $stateParams.projectId, ticketId: $stateParams.ticketId});
         });
     };

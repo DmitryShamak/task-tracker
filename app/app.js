@@ -9,7 +9,9 @@ var templates = {
 (function() {
     angular.module('app', ['ui.router', 'ngResource'])
         .config(require("./js/config.js"))
-        .run(function($rootScope, $state, $injector, $location) {
+        .run(function($rootScope, $state, $injector, $location, user) {
+            $rootScope.user = user;
+
             $rootScope.$on('$stateChangeStart', function(event, toState) {
                 $rootScope.pageTitle = toState.data.pageTitle || "Tracker";
 
@@ -24,7 +26,13 @@ var templates = {
         .directive('navigation', function() {
             return {
                 restrict: 'A',
-                template: templates.navigation
+                template: templates.navigation,
+                controller: function($scope, $state) {
+                    $scope.signOut = function() {
+                        $scope.user.signOut();
+                        $state.go("landing");
+                    }
+                }
             }
         })
 
@@ -35,8 +43,9 @@ var templates = {
         .factory('api', function() {
             return require("./js/helpers/api.js");
         })
-        .factory('user', function() {
-            return require("./js/helpers/user.js");
+        .factory('user', function(api) {
+            var User = require("./js/helpers/user.js");
+            return new User(api.user);
         })
         .factory('project', function() {
             return require("./js/helpers/project.js");

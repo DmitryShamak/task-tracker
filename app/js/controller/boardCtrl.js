@@ -11,7 +11,7 @@ module.exports = function ($scope, $stateParams, api) {
 
     $scope.addNew = function() {
         $scope.busy = true;
-        api.add({
+        api.board.add({
             key: $scope.nextLevel
         }, {
             label: "new project",
@@ -26,7 +26,7 @@ module.exports = function ($scope, $stateParams, api) {
     $scope.content = [];
     $scope.busy = true;
 
-    api.get({key: "project"}).then(function(data) {
+    api.board.get({key: "project"}).then(function(data) {
         $scope.content = data.map(function(item, index) {
             return convertProject(item);
         });

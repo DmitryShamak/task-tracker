@@ -13,7 +13,7 @@ module.exports = function ($scope, $stateParams, api) {
 
     $scope.addNew = function() {
         $scope.busy = true;
-        api.add({
+        api.board.add({
             key: $scope.nextLevel
         }, {
             label: "new ticket",
@@ -29,7 +29,7 @@ module.exports = function ($scope, $stateParams, api) {
     $scope.content = [];
     $scope.busy = true;
 
-    api.get({key: $scope.nextLevel, projectId: $stateParams.projectId}).then(function(data) {
+    api.board.get({key: $scope.nextLevel, projectId: $stateParams.projectId}).then(function(data) {
         $scope.content = data.map(function(item, index) {
             return convertProject(item);
         });
