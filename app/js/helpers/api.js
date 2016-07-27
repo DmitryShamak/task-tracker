@@ -38,9 +38,23 @@ utils.add = function(params, data) {
 
 
 utils.remove = function(params) {};
+
 utils.update = function(params, data) {
     return new Promise(function(resolve, reject) {
-        resolve(data);
+        utils.get(params).then(function(result) {
+            var target = result.filter(function(item) {
+                return item.id == data.id;
+            })[0];
+
+            if(target) {
+                target = $.extend(target, data);
+                localStorage.setItem(params.key, JSON.stringify(result));
+
+                return resolve(target);
+            }
+
+            reject("error");
+        });
     });
 };
 

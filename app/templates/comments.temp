@@ -1,0 +1,11 @@
+<h3>
+    <div>
+        <span>Comments</span>
+        <span ng-show="busy" class="text-small" pending></span>
+    </div>
+
+    <small ng-hide="busy || comments || comments.length">No comments.</small>
+</h3>
+<div ng-repeat="comment in comments">
+    <span ng-bind="comment.text"></span>
+</div>

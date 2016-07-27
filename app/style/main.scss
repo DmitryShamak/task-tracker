@@ -18,6 +18,10 @@ body {
   &[class*="-bold"] {
     font-weight: 600;
   }
+
+  &[class*="-small"] {
+    font-size: 0.8em;
+  }
 }
 
 aside {

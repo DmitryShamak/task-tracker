@@ -1,7 +1,9 @@
 var styles = require("./style/main.scss");
 var templates = {
-  navigation: require("./templates/navigation.temp"),
-  history: require("./templates/history.temp")
+    navigation: require("./templates/navigation.temp"),
+    history: require("./templates/history.temp"),
+    comments: require("./templates/comments.temp"),
+    pending: require("./templates/pending.temp")
 };
 
 (function() {
@@ -25,7 +27,11 @@ var templates = {
                 template: templates.navigation
             }
         })
+
+        .directive('pending', require("./js/directive/pending.js")(templates.pending))
         .directive('history', require("./js/directive/history.js")(templates.history))
+        .directive('comments', require("./js/directive/comments.js")(templates.comments))
+
         .factory('api', function() {
             return require("./js/helpers/api.js");
         })

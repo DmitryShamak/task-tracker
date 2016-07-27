@@ -8,16 +8,26 @@
 
         <div ng-if="!busy">
             <div ng-if="!edit">
-                <h2>
-                    <span ng-bind="ticket.label"></span>
-                    <a ui-sref="ticket.edit({projectId: {{projectId}}, ticketId: {{ticketId}} })">edit</a>
-                </h2>
+                <div class="ticket-details">
+                    <h2>
+                        <span ng-bind="ticket.label"></span>
+                        <a ui-sref="ticket.edit({projectId: {{ticket.projectId}}, ticketId: {{ticket.id}} })">edit</a>
+                    </h2>
+
+                    <p ng-bind="ticket.details"></p>
+                </div>
+
+                <div comments ticket-id="{{ticket.id}}"></div>
             </div>
 
             <div ng-if="edit">
                 <form ng-submit="onSubmit(ticket)">
                     <div class="form-group">
                         <input class="form-control" type="text" ng-model="ticket.label" placeholder="Label" />
+                    </div>
+
+                    <div class="form-group">
+                        <textarea class="form-control" ng-model="ticket.details" placeholder="Details"></textarea>
                     </div>
 
                     <div class="form-group">

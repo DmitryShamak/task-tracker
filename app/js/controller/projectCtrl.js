@@ -1,7 +1,7 @@
 module.exports = function ($scope, $stateParams, api) {
     $scope.nextLevel = "ticket";
 
-    var convertTicket = function(data) {
+    var convertProject = function(data) {
         return {
             label: data.label,
             urlParams: {
@@ -21,7 +21,7 @@ module.exports = function ($scope, $stateParams, api) {
             id: new Date().getTime(),
             data: new Date().getTime()
         }).then(function(data) {
-            $scope.content.push(convertTicket(data));
+            $scope.content.push(convertProject(data));
             $scope.busy = false;
             $scope.$digest();
         });
@@ -31,7 +31,7 @@ module.exports = function ($scope, $stateParams, api) {
 
     api.get({key: $scope.nextLevel, projectId: $stateParams.projectId}).then(function(data) {
         $scope.content = data.map(function(item, index) {
-            return convertTicket(item);
+            return convertProject(item);
         });
 
         $scope.busy = false;
