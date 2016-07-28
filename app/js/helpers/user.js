@@ -1,4 +1,4 @@
-function User(api) {
+function User() {
     var self = this;
     var details = null;
     var extend = function (target, obj) {
@@ -22,8 +22,8 @@ function User(api) {
                 return resolve(details);
             }
 
-            if(query) {
-                return api.find(query).then(function(result) {
+            if(self.api && query) {
+                return self.api.find(query).then(function(result) {
                     if(result) {
                         details = result;
                         self.setSession();
@@ -42,6 +42,10 @@ function User(api) {
                 return resolve(details);
             }
 
+            if(!self.api) {
+                return resolve(null);
+            }
+
             self.signIn(query).then(function(result) {
                 if(result) {
                     details = result;
@@ -49,7 +53,7 @@ function User(api) {
                     return resolve(result);
                 }
 
-                api.set(query).then(function(result) {
+                self.api.set(query).then(function(result) {
                     details = result;
                     self.setSession();
                     resolve(result)
@@ -67,7 +71,11 @@ function User(api) {
     };
     self.set = function(data) {
         return new Promise(function(resolve, jeject) {
-            api.update(data).then(function(result) {
+            if(!self.api) {
+                return resolve(null);
+            }
+
+            self.api.update(data).then(function(result) {
                 extend(details, result);
 
                 resolve(details);
@@ -90,4 +98,4 @@ function User(api) {
     };
 }
 
-module.exports = User;
+module.exports = new User();

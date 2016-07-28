@@ -19,8 +19,9 @@ module.exports = function ($scope, $stateParams, api) {
             data: new Date().getTime()
         }).then(function(data) {
             $scope.content.push(convertProject(data));
+
             $scope.busy = false;
-            $scope.$digest();
+            $scope.safeApply($scope);
         });
     };
     $scope.content = [];
@@ -32,6 +33,6 @@ module.exports = function ($scope, $stateParams, api) {
         });
 
         $scope.busy = false;
-        $scope.$digest();
+        $scope.safeApply($scope);
     });
 };

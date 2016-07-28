@@ -6,17 +6,38 @@ var templates = {
     pending: require("./templates/pending.temp")
 };
 
+var User = require("./js/helpers/user.js");
+
 (function() {
     angular.module('app', ['ui.router', 'ngResource'])
         .config(require("./js/config.js"))
         .run(function($rootScope, $state, $injector, $location, user) {
-            $rootScope.user = user;
+            $rootScope.safeApply = function(scope) {
+                if (scope.$root.$$phase != '$apply' && scope.$root.$$phase != '$digest') {
+                    scope.$apply();
+                }
+            };
+
+            $rootScope.profile = null;
+
+            $rootScope.checkProfile = function() {
+                if(!$rootScope.profile) {
+                    user.refresh().then(function(result) {
+                        if(result) {
+                            $rootScope.profile = result;
+                            $rootScope.$broadcast('USER_CONNECT');
+                        }
+                    });
+                }
+            };
 
             $rootScope.$on('$stateChangeStart', function(event, toState) {
                 $rootScope.pageTitle = toState.data.pageTitle || "Tracker";
 
                 $rootScope.showNavigation = toState.data.navigation || false;
                 $rootScope.showFooter = toState.data.footer || false;
+
+                $rootScope.checkProfile();
             });
         })
         .controller('LandingCtrl', require("./js/controller/landingCtrl.js"))
@@ -44,8 +65,11 @@ var templates = {
             return require("./js/helpers/api.js");
         })
         .factory('user', function(api) {
-            var User = require("./js/helpers/user.js");
-            return new User(api.user);
+            if(!User.api) {
+                User.api = api.user;
+            }
+
+            return User;
         })
         .factory('project', function() {
             return require("./js/helpers/project.js");

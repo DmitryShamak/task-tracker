@@ -37,7 +37,7 @@ var board = {
     remove: function(params) {},
     update: function(params, data) {
         return new Promise(function(resolve, reject) {
-            utils.get(params).then(function(result) {
+            board.get(params).then(function(result) {
                 var target = result.filter(function(item) {
                     return item.id == data.id;
                 })[0];

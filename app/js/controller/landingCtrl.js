@@ -1,12 +1,11 @@
-module.exports = function ($scope, $state) {
+module.exports = function ($scope, $state, user) {
     $scope.authForm = {};
 
-    $scope.busy = true;
-    $scope.user.refresh().then(function(result) {
-        $scope.busy = false;
-        if(result) {
-            $state.go("board");
-        }
+    if($scope.profile) {
+        $state.go("board");
+    }
+    $scope.$on('USER_CONNECT', function () {
+        $state.go("board");
     });
 
     $scope.signIn = function() {
@@ -19,7 +18,7 @@ module.exports = function ($scope, $state) {
             }
 
             $scope.errorMessage = "No such user. Please check email and password.";
-            $scope.$digest();
+            $scope.safeApply($scope);
         });
     };
 
@@ -32,7 +31,7 @@ module.exports = function ($scope, $state) {
                 return $state.go("board");
             }
 
-            $scope.$digest();
+            $scope.safeApply($scope);
         });
     };
 };

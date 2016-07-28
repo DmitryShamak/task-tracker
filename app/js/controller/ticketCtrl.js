@@ -4,7 +4,7 @@ module.exports = function ($scope, $state, $stateParams, api) {
 
     $scope.$on('$stateChangeStart', function(event, toState) {
         $scope.edit = toState.data.edit || false;
-        $scope.$digest();
+        $scope.safeApply($scope);
     });
 
     $scope.getTicket = function() {
@@ -35,6 +35,6 @@ module.exports = function ($scope, $state, $stateParams, api) {
         $scope.ticket = data;
 
         $scope.busy = false;
-        $scope.$digest();
+        $scope.safeApply($scope);
     });
 };

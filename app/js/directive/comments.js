@@ -7,7 +7,7 @@ module.exports = function(template) {
                 scope.ticketId = attr.ticketId;
 
                 scope.busy = true;
-                scope.$digest();
+                scope.safeApply(scope);
             }
         }
     }
