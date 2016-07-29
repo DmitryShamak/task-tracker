@@ -25,7 +25,7 @@ module.exports = function ($scope, $state, user) {
     $scope.signUp = function() {
         $scope.errorMessage = null;
         $scope.busy = true;
-        $scope.user.signUp($scope.authForm).then(function(result) {
+        user.signUp($scope.authForm).then(function(result) {
             $scope.busy = false;
             if(result) {
                 return $state.go("board");

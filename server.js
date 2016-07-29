@@ -9,5 +9,7 @@ app.all('/*', function(req, res) {
     res.sendfile('./index.html');
 });
 
-app.listen(3001);
+app.listen(3001, function() {
+    console.info("server running");
+});
 

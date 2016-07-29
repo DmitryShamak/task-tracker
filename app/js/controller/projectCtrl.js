@@ -32,7 +32,12 @@ module.exports = function ($scope, $stateParams, $state, api) {
     };
 
     $scope.onSubmit = function(data) {
-        $state.go("project", {projectId: $stateParams.projectId});
+        api.board.update({
+            key: "project",
+            id: $stateParams.projectId
+        }, data).then(function(result) {
+            $state.go("project", {projectId: $stateParams.projectId});
+        });
     };
 
     $scope.reset = function() {

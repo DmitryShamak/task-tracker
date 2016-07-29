@@ -1,4 +1,4 @@
-module.exports = function ($scope, $stateParams, api) {
+module.exports = function ($scope, $stateParams, $state,  api) {
     $scope.nextLevel = "project";
     var convertProject = function(data) {
         return {
@@ -18,10 +18,8 @@ module.exports = function ($scope, $stateParams, api) {
             id: new Date().getTime(),
             data: new Date().getTime()
         }).then(function(data) {
-            $scope.content.push(convertProject(data));
-
             $scope.busy = false;
-            $scope.safeApply($scope);
+            $state.go("project.edit", {projectId: data.id});
         });
     };
     $scope.content = [];
