@@ -4,7 +4,10 @@
     <section class="col-xs-12">
         <a class="form-group" ui-sref="project({projectId: {{projectId}} })">go back</a>
 
-        <h2 ng-show="busy">pending..</h2>
+        <h2 ng-show="busy">
+            <span pending></span>
+            <span>Pending..</span>
+        </h2>
 
         <div ng-if="!busy">
             <div ng-if="!edit">
@@ -21,6 +24,8 @@
             </div>
 
             <div ng-if="edit">
+                <h2>Edit</h2>
+
                 <form ng-submit="onSubmit(ticket)">
                     <div class="form-group">
                         <input class="form-control" type="text" ng-model="ticket.label" placeholder="Label" />

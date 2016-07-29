@@ -2,23 +2,26 @@ var board = {
     get: function(params) {
         return new Promise(function(resolve, reject) {
             var delay = Math.floor(Math.random() * 999);
-            var result = JSON.parse(localStorage.getItem(params.key)) || [];
+            var itemsCatalog = JSON.parse(localStorage.getItem(params.key)) || [];
+            var catalog = params.detailsKey ? JSON.parse(localStorage.getItem(params.detailsKey)) : [];
+
+            var details = params.id ? catalog.filter(function(item) { return item.id == params.id; })[0] : null;
+            var items = params.projectId ? itemsCatalog.filter(function(item) {
+                return item.projectId === params.projectId;
+            }) : itemsCatalog;
 
             setTimeout(function() {
-                if(params.projectId) {
-                    resolve(result.filter(function(item) {
-                        return item.projectId === params.projectId;
-                    }));
-                } else {
-                    resolve(result);
-                }
+                resolve({
+                    details: details,
+                    items: items
+                });
             }, delay);
         });
     },
     getTicket: function(params) {
         return new Promise(function(resolve, reject) {
             board.get(params).then(function(data) {
-                resolve(data.filter(function(item) {
+                resolve(data.items.filter(function(item) {
                     return item.id == params.id;
                 })[0])
             });
@@ -27,8 +30,8 @@ var board = {
     add: function(params, data) {
         return new Promise(function(resolve, reject) {
             board.get({key: params.key}).then(function(result) {
-                result.push(data);
-                localStorage.setItem(params.key, JSON.stringify(result));
+                result.items.push(data);
+                localStorage.setItem(params.key, JSON.stringify(result.items));
 
                 resolve(data);
             });
@@ -38,13 +41,13 @@ var board = {
     update: function(params, data) {
         return new Promise(function(resolve, reject) {
             board.get(params).then(function(result) {
-                var target = result.filter(function(item) {
+                var target = result.items.filter(function(item) {
                     return item.id == data.id;
                 })[0];
 
                 if(target) {
                     target = $.extend(target, data);
-                    localStorage.setItem(params.key, JSON.stringify(result));
+                    localStorage.setItem(params.key, JSON.stringify(result.items));
 
                     return resolve(target);
                 }

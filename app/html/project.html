@@ -1,0 +1,49 @@
+<section class="clearfix">
+    <header id="header" history></header>
+
+    <div id="board" class="col-xs-12">
+        <h2 ng-show="busy">
+            <span pending></span>
+            <span>Pending..</span>
+        </h2>
+
+        <section ng-hide="busy">
+            <div ng-if="project" class="details">
+                <div ng-if="!edit">
+                    <h2>
+                        <span ng-bind="project.label"></span>
+                        <a ui-sref="project.edit({projectId: {{project.id}}})">edit</a>
+                    </h2>
+                </div>
+                <div ng-if="edit">
+                    <h2>Edit</h2>
+
+                    <form ng-submit="onSubmit(project)">
+                        <div class="form-group">
+                            <input class="form-control" type="text" ng-model="project.label" placeholder="Label" />
+                        </div>
+
+                        <div class="form-group">
+                            <button class="btn btn-success">Save</button>
+
+                            <div class="btn btn-warning" ng-click="reset()">Cancel</div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row items-list">
+                <article class="board-item col-xs-6 col-sm-4 col-md-3 col-lg-2" ng-click="addNew()">
+                    <div class="content text-center btn-add">+</div>
+                </article>
+
+                <a ui-sref="{{nextLevel}}(item.urlParams)" class="board-item col-xs-6 col-sm-4 col-md-3 col-lg-2" ng-repeat="(key, item) in content">
+                    <div class="content">
+                        <div class="label" ng-bind="item.label"></div>
+                        <p nf-if="item.details" class="details" ng-bind="item.details"></p>
+                    </div>
+                </a>
+            </div>
+        </section>
+    </div>
+</section>

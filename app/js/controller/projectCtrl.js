@@ -1,5 +1,12 @@
-module.exports = function ($scope, $stateParams, api) {
+module.exports = function ($scope, $stateParams, $state, api) {
     $scope.nextLevel = "ticket";
+    $scope.edit = $state.$current.data.edit || false;
+    $scope.content = [];
+
+    $scope.$on('$stateChangeStart', function(event, toState) {
+        $scope.edit = toState.data.edit || false;
+        $scope.safeApply($scope);
+    });
 
     var convertProject = function(data) {
         return {
@@ -9,6 +16,28 @@ module.exports = function ($scope, $stateParams, api) {
                 ticketId: data.id
             }
         };
+    };
+
+    $scope.getProject = function() {
+        $scope.busy = true;
+        api.board.get({key: $scope.nextLevel, detailsKey: "project", id: $stateParams.projectId, projectId: $stateParams.projectId}).then(function(data) {
+            $scope.project = data.details;
+            $scope.content = data.items.map(function(item, index) {
+                return convertProject(item);
+            });
+
+            $scope.busy = false;
+            $scope.safeApply($scope);
+        });
+    };
+
+    $scope.onSubmit = function(data) {
+        $state.go("project", {projectId: $stateParams.projectId});
+    };
+
+    $scope.reset = function() {
+        $scope.getProject();
+        $state.go("project", {projectId: $stateParams.projectId});
     };
 
     $scope.addNew = function() {
@@ -21,21 +50,10 @@ module.exports = function ($scope, $stateParams, api) {
             id: new Date().getTime(),
             data: new Date().getTime()
         }).then(function(data) {
-            $scope.content.push(convertProject(data));
-
             $scope.busy = false;
-            $scope.safeApply($scope);
+            $state.go("ticket.edit", {projectId: $stateParams.projectId, ticketId: data.id});
         });
     };
-    $scope.content = [];
-    $scope.busy = true;
 
-    api.board.get({key: $scope.nextLevel, projectId: $stateParams.projectId}).then(function(data) {
-        $scope.content = data.map(function(item, index) {
-            return convertProject(item);
-        });
-
-        $scope.busy = false;
-        $scope.safeApply($scope);
-    });
+    $scope.getProject();
 };

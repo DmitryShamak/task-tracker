@@ -5,16 +5,18 @@
         <h2 ng-show="busy">pending..</h2>
 
         <section ng-hide="busy">
-            <article class="board-item col-xs-6 col-sm-4 col-md-3 col-lg-2" ng-click="addNew()">
-                <div class="content text-center btn-add">+</div>
-            </article>
+            <div class="row items-list">
+                <article class="board-item col-xs-6 col-sm-4 col-md-3 col-lg-2" ng-click="addNew()">
+                    <div class="content text-center btn-add">+</div>
+                </article>
 
-            <a ui-sref="{{nextLevel}}(item.urlParams)" class="board-item col-xs-6 col-sm-4 col-md-3 col-lg-2" ng-repeat="(key, item) in content">
-                <div class="content">
-                    <div class="label" ng-bind="item.label"></div>
-                    <p nf-if="item.details" class="details" ng-bind="item.details"></p>
-                </div>
-            </a>
+                <a ui-sref="{{nextLevel}}(item.urlParams)" class="board-item col-xs-6 col-sm-4 col-md-3 col-lg-2" ng-repeat="(key, item) in content">
+                    <div class="content">
+                        <div class="label" ng-bind="item.label"></div>
+                        <p nf-if="item.details" class="details" ng-bind="item.details"></p>
+                    </div>
+                </a>
+            </div>
         </section>
     </div>
 </section>

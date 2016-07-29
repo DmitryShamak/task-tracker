@@ -28,7 +28,7 @@ module.exports = function ($scope, $stateParams, api) {
     $scope.busy = true;
 
     api.board.get({key: "project"}).then(function(data) {
-        $scope.content = data.map(function(item, index) {
+        $scope.content = data.items.map(function(item, index) {
             return convertProject(item);
         });
 

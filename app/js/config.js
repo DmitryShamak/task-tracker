@@ -5,6 +5,7 @@ module.exports = function($stateProvider, $urlRouterProvider, $locationProvider)
     var templates = {
         landing: require("../html/landing.html"),
         board: require("../html/board.html"),
+        project: require("../html/project.html"),
         ticket: require("../html/ticket.html")
     };
 
@@ -30,10 +31,22 @@ module.exports = function($stateProvider, $urlRouterProvider, $locationProvider)
         })
         .state('project', {
             url: "/board/:projectId",
-            template: templates.board,
+            template: templates.project,
             data: {
                 pageTitle: 'Project',
                 navigation: true,
+                footer: true,
+                level: 1
+            },
+            controller: "ProjectCtrl"
+        })
+        .state('project.edit', {
+            url: "/edit",
+            template: templates.project,
+            data: {
+                pageTitle: 'Project',
+                navigation: true,
+                edit: true,
                 footer: true,
                 level: 1
             },
