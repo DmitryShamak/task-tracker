@@ -3,6 +3,7 @@ var templates = {
     navigation: require("./templates/navigation.temp"),
     history: require("./templates/history.temp"),
     comments: require("./templates/comments.temp"),
+    participant: require("./templates/participant.temp"),
     pending: require("./templates/pending.temp")
 };
 
@@ -40,10 +41,12 @@ var User = require("./js/helpers/user.js");
                 $rootScope.checkProfile();
             });
         })
+
         .controller('LandingCtrl', require("./js/controller/landingCtrl.js"))
         .controller('BoardCtrl', require("./js/controller/boardCtrl.js"))
         .controller('ProjectCtrl', require("./js/controller/projectCtrl.js"))
         .controller('TicketCtrl', require("./js/controller/ticketCtrl.js"))
+
         .directive('navigation', function() {
             return {
                 restrict: 'A',
@@ -60,6 +63,7 @@ var User = require("./js/helpers/user.js");
         .directive('pending', require("./js/directive/pending.js")(templates.pending))
         .directive('history', require("./js/directive/history.js")(templates.history))
         .directive('comments', require("./js/directive/comments.js")(templates.comments))
+        .directive('participants', require("./js/directive/participants.js")(templates.participant))
 
         .factory('api', function() {
             return require("./js/helpers/api.js");
@@ -73,6 +77,9 @@ var User = require("./js/helpers/user.js");
         })
         .factory('project', function() {
             return require("./js/helpers/project.js");
+        })
+        .factory('participant', function() {
+            return require("./js/helpers/participant.js");
         })
         .factory('task', function() {
             return require("./js/helpers/task.js");

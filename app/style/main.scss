@@ -60,25 +60,44 @@ main {
     }
   }
 
-  #board {
+  #participants {
+    padding: 5px;
+    background-color: rgba(255,255,255,0.1);
+  }
+
+  #board,
+  #project {
     .empty-item {
       padding: 0 15px;
+    }
+
+    .title {
+      margin-top: 0;
     }
 
     .board-item {
       margin: 20px 0;
 
       .btn-add {
-        line-height: 100px;
+        line-height: 80px;
         font-size: 3em;
 
         cursor: pointer;
       }
 
       .content {
+        padding: 10px;
+
+        color: $mainTextColor;
+        text-decoration: none;
+
         min-height: 100px;
 
         background-color: rgba(255, 255, 255, 0.1);
+
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
       }
     }
   }

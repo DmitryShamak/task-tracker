@@ -24,7 +24,7 @@ module.exports = function($stateProvider, $urlRouterProvider, $locationProvider)
             data: {
                 pageTitle: 'Board',
                 navigation: true,
-                footer: true,
+                footer: false,
                 level: 0
             },
             controller: "BoardCtrl"
@@ -35,7 +35,7 @@ module.exports = function($stateProvider, $urlRouterProvider, $locationProvider)
             data: {
                 pageTitle: 'Project',
                 navigation: true,
-                footer: true,
+                footer: false,
                 level: 1
             },
             controller: "ProjectCtrl"
@@ -47,7 +47,7 @@ module.exports = function($stateProvider, $urlRouterProvider, $locationProvider)
                 pageTitle: 'Project',
                 navigation: true,
                 edit: true,
-                footer: true,
+                footer: false,
                 level: 1
             },
             controller: "ProjectCtrl"
@@ -58,7 +58,7 @@ module.exports = function($stateProvider, $urlRouterProvider, $locationProvider)
             data: {
                 pageTitle: 'Ticket',
                 navigation: true,
-                footer: true,
+                footer: false,
                 level: 1
             },
             controller: "TicketCtrl"
@@ -70,7 +70,7 @@ module.exports = function($stateProvider, $urlRouterProvider, $locationProvider)
                 pageTitle: 'Ticket',
                 edit: true,
                 navigation: true,
-                footer: true,
+                footer: false,
                 level: 1
             },
             controller: "TicketCtrl"

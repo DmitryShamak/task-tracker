@@ -1,0 +1,16 @@
+<div id="participants" class="clearfix">
+    <h5 class="title">Participants:</h5>
+
+    <div ng-if="busy">
+        <span pending></span>
+        <span>Pending..</span>
+    </div>
+    <div class="clearfix" ng-hide="busy">
+        <div class="btn btn-warning col-xs-1">
+            <span>+</span>
+        </div>
+        <div class="btn col-xs-1" ng-repeat="user in users">
+            <span ng-bind="user.name || user.email"></span>
+        </div>
+    </div>
+</div>

@@ -17,6 +17,10 @@
                         <a ui-sref="ticket.edit({projectId: {{ticket.projectId}}, ticketId: {{ticket.id}} })">edit</a>
                     </h2>
 
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4" participants id="{{ticket.id}}" target="ticket"></div>
+                    </div>
+
                     <p ng-bind="ticket.description"></p>
                 </div>
 

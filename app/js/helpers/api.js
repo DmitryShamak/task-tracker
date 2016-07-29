@@ -117,7 +117,27 @@ var user = {
         });
     }
 };
+
+var participant = {
+    get: function() {
+        return new Promise(function(resolve, reject) {
+            reject(null);
+        });
+    },
+    add: function() {
+        return new Promise(function(resolve, reject) {
+            reject(null);
+        });
+    },
+    remove: function() {
+        return new Promise(function(resolve, reject) {
+            reject(null);
+        });
+    }
+};
+
 module.exports = {
     board: board,
-    user: user
+    user: user,
+    participant: participant
 };

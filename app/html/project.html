@@ -1,7 +1,7 @@
 <section class="clearfix">
     <header id="header" history></header>
 
-    <div id="board" class="col-xs-12">
+    <div id="project" class="col-xs-12">
         <h2 ng-show="busy">
             <span pending></span>
             <span>Pending..</span>
@@ -14,8 +14,14 @@
                         <span ng-bind="project.label"></span>
                         <a ui-sref="project.edit({projectId: {{project.id}}})">edit</a>
                     </h2>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4" participants id="{{project.id}}" target="project"></div>
+                    </div>
+
                     <p ng-bind="project.description"></p>
                 </div>
+
                 <div ng-if="edit">
                     <h2>Edit</h2>
 
@@ -44,7 +50,7 @@
 
                 <a ui-sref="{{nextLevel}}(item.urlParams)" class="board-item col-xs-6 col-sm-4 col-md-3 col-lg-2" ng-repeat="(key, item) in content">
                     <div class="content">
-                        <div class="label" ng-bind="item.label"></div>
+                        <h4 class="title" ng-bind="item.label"></h4>
                         <p nf-if="item.details" class="details" ng-bind="item.details"></p>
                     </div>
                 </a>
