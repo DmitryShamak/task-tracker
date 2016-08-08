@@ -3,6 +3,8 @@ module.exports = function ($scope, $stateParams, $state, api) {
     $scope.edit = $state.$current.data.edit || false;
     $scope.content = [];
 
+    $scope.id = $stateParams.projectId;
+
     $scope.$on('$stateChangeStart', function(event, toState) {
         $scope.edit = toState.data.edit || false;
         $scope.safeApply($scope);
@@ -20,7 +22,7 @@ module.exports = function ($scope, $stateParams, $state, api) {
 
     $scope.getProject = function() {
         $scope.busy = true;
-        api.board.get({key: $scope.nextLevel, detailsKey: "project", id: $stateParams.projectId, projectId: $stateParams.projectId}).then(function(data) {
+        api.board.get({key: $scope.nextLevel, detailsKey: "project", id: $scope.id, projectId: $stateParams.projectId}).then(function(data) {
             $scope.project = data.details;
             $scope.content = data.items.map(function(item, index) {
                 return convertProject(item);

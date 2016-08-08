@@ -1,0 +1,16 @@
+<section class="container-fluid clearfix">
+    <div class="">
+        <h2>
+            <span>Profile</span>
+            <span ng-if="profile.status" class="pointer text-danger" ng-click="changeStatus()">[ <span ng-bind="profile.status"></span> ]</span>
+        </h2>
+        <h2 ng-if="profile.name">
+            <span>Name: </span>
+            <span ng-bind="profile.name"></span>
+        </h2>
+        <h2 ng-if="profile.email">
+            <span>Email: </span>
+            <span ng-bind="profile.email"></span>
+        </h2>
+    </div>
+</section>

@@ -1,4 +1,7 @@
-<a nf-if="profile" ui-sref="profile" title="{{profile.name || profile.email}}">USER_NAME</a>
-
-<a class="btn" ui-sref="board">Board</a>
-<a class="btn" ng-click="signOut()">Sign Out</a>
+<div class="navigation-links">
+    <nav><a class="link" ui-sref="profile" title="{{profile.name || profile.email}}">
+        Profile <span ng-bind="'[' + (profile.name || profile.email) + ']'"></span>
+    </a></nav>
+    <nav><a class="link" ui-sref="board">Board</a></nav>
+    <nav><a class="link" ng-click="signOut()">Sign Out</a></nav>
+</div>

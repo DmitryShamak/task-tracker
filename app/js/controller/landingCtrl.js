@@ -11,8 +11,10 @@ module.exports = function ($scope, $state, user) {
     $scope.signIn = function() {
         $scope.errorMessage = null;
         $scope.busy = true;
-        $scope.user.signIn($scope.authForm).then(function(result) {
+        user.signIn($scope.authForm).then(function(result) {
             $scope.busy = false;
+            $scope.$root.anonymous = false;
+
             if(result) {
                 return $state.go("board");
             }
@@ -27,6 +29,8 @@ module.exports = function ($scope, $state, user) {
         $scope.busy = true;
         user.signUp($scope.authForm).then(function(result) {
             $scope.busy = false;
+            $scope.$root.anonymous = false;
+
             if(result) {
                 return $state.go("board");
             }

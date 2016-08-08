@@ -35,6 +35,10 @@ aside {
 
   background: $mainBgColor;
   color: $mainTextColor;
+
+  .navigation-links {
+    padding: 20px 10px 40px 20px;
+  }
 }
 
 main {

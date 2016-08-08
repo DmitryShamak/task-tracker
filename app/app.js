@@ -21,13 +21,27 @@ var User = require("./js/helpers/user.js");
 
             $rootScope.profile = null;
 
+            $rootScope.signOut = function() {
+                user.signOut();
+                $rootScope.profile = null;
+                $rootScope.anonymous = true;
+
+                $state.go("landing");
+            };
+
             $rootScope.checkProfile = function() {
                 if(!$rootScope.profile) {
+                    if($rootScope.anonymous) {
+                        return;
+                    }
                     user.refresh().then(function(result) {
                         if(result) {
                             $rootScope.profile = result;
-                            $rootScope.$broadcast('USER_CONNECT');
+                            return $rootScope.$broadcast('USER_LOGGED', $rootScope.profile);
                         }
+
+                        $rootScope.anonymous = true;
+                        $state.go("landing");
                     });
                 }
             };
@@ -46,16 +60,16 @@ var User = require("./js/helpers/user.js");
         .controller('BoardCtrl', require("./js/controller/boardCtrl.js"))
         .controller('ProjectCtrl', require("./js/controller/projectCtrl.js"))
         .controller('TicketCtrl', require("./js/controller/ticketCtrl.js"))
+        .controller('ProfileCtrl', require("./js/controller/profileCtrl.js"))
 
         .directive('navigation', function() {
             return {
                 restrict: 'A',
                 template: templates.navigation,
-                controller: function($scope, $state) {
-                    $scope.signOut = function() {
-                        $scope.user.signOut();
-                        $state.go("landing");
-                    }
+                controller: function($scope, $state, user) {
+                    $scope.$on("USER_LOGGED", function(event, profile) {
+                        $scope.safeApply($scope);
+                    });
                 }
             }
         })
@@ -77,9 +91,6 @@ var User = require("./js/helpers/user.js");
         })
         .factory('project', function() {
             return require("./js/helpers/project.js");
-        })
-        .factory('participant', function() {
-            return require("./js/helpers/participant.js");
         })
         .factory('task', function() {
             return require("./js/helpers/task.js");

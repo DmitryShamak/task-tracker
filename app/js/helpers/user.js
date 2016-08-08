@@ -75,7 +75,7 @@ function User() {
                 return resolve(null);
             }
 
-            self.api.update(data).then(function(result) {
+            self.api.update({email: details.email}, data).then(function(result) {
                 extend(details, result);
 
                 resolve(details);

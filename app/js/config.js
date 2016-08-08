@@ -6,7 +6,8 @@ module.exports = function($stateProvider, $urlRouterProvider, $locationProvider)
         landing: require("../html/landing.html"),
         board: require("../html/board.html"),
         project: require("../html/project.html"),
-        ticket: require("../html/ticket.html")
+        ticket: require("../html/ticket.html"),
+        profile: require("../html/profile.html")
     };
 
     $stateProvider
@@ -74,5 +75,17 @@ module.exports = function($stateProvider, $urlRouterProvider, $locationProvider)
                 level: 1
             },
             controller: "TicketCtrl"
+        })
+        .state('profile', {
+            url: "/profile",
+            template: templates.profile,
+            data: {
+                pageTitle: 'Profile',
+                edit: false,
+                navigation: true,
+                footer: false,
+                level: 1
+            },
+            controller: "ProfileCtrl"
         });
 };

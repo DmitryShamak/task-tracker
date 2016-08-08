@@ -11,12 +11,13 @@
             <div ng-if="project" class="details">
                 <div ng-if="!edit">
                     <h2>
+                        <span>Project: </span>
                         <span ng-bind="project.label"></span>
                         <a ui-sref="project.edit({projectId: {{project.id}}})">edit</a>
                     </h2>
 
                     <div class="row">
-                        <div class="col-xs-12 col-sm-4" participants id="{{project.id}}" target="project"></div>
+                        <div class="col-xs-12 col-sm-4" participants invite="true" target="project" id="{{project.id}}"></div>
                     </div>
 
                     <p ng-bind="project.description"></p>
@@ -44,6 +45,8 @@
             </div>
 
             <div class="row items-list">
+                <div class="col-xs-12"><h2>Tickets</h2></div>
+
                 <article class="board-item col-xs-6 col-sm-4 col-md-3 col-lg-2" ng-click="addNew()">
                     <div class="content text-center btn-add">+</div>
                 </article>

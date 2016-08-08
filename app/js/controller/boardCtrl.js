@@ -9,11 +9,42 @@ module.exports = function ($scope, $stateParams, $state,  api) {
         };
     };
 
+    $scope.getBoard = function() {
+        if($scope.profile.status === "admin") {
+            return api.board.get({key: "project"}).then(function(data) {
+                $scope.content = data.items.map(function(item, index) {
+                    return convertProject(item);
+                });
+
+                $scope.busy = false;
+                $scope.safeApply($scope);
+            });
+        }
+
+        api.board.getAvailableProjects($scope.profile).then(function(result) {
+            if(!result || !result.length) {
+                $scope.busy = false;
+                $scope.safeApply($scope);
+                return;
+            }
+
+            api.board.get({items: result, key: "project"}).then(function(data) {
+                $scope.content = data.items.map(function(item, index) {
+                    return convertProject(item);
+                });
+
+                $scope.busy = false;
+                $scope.safeApply($scope);
+            });
+        });
+    };
+
     $scope.addNew = function() {
         $scope.busy = true;
         api.board.add({
             key: $scope.nextLevel
         }, {
+            user: $scope.profile.email,
             label: "new project",
             id: new Date().getTime(),
             data: new Date().getTime()
@@ -25,12 +56,9 @@ module.exports = function ($scope, $stateParams, $state,  api) {
     $scope.content = [];
     $scope.busy = true;
 
-    api.board.get({key: "project"}).then(function(data) {
-        $scope.content = data.items.map(function(item, index) {
-            return convertProject(item);
-        });
+    if($scope.profile) {
+        $scope.getBoard();
+    }
 
-        $scope.busy = false;
-        $scope.safeApply($scope);
-    });
+    $scope.$on("USER_LOGGED", $scope.getBoard);
 };

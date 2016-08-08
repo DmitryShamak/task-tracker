@@ -13,6 +13,7 @@
             <div ng-if="!edit">
                 <div class="ticket-details">
                     <h2>
+                        <span>Ticket: </span>
                         <span ng-bind="ticket.label"></span>
                         <a ui-sref="ticket.edit({projectId: {{ticket.projectId}}, ticketId: {{ticket.id}} })">edit</a>
                     </h2>

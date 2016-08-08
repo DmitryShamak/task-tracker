@@ -1,14 +1,72 @@
+var member = {
+    get: function() {
+        return new Promise(function(resolve, reject) {
+            var members = JSON.parse(localStorage.getItem("member")) || [];
+
+            resolve(members);
+        });
+    },
+    find: function(query) {
+
+    },
+    add: function(data) {
+        return new Promise(function(resolve, reject) {
+            if(!data || !data.user || !data.id) {
+                return resolve(null);
+            }
+
+            member.get().then(function(members) {
+                var newMember = {
+                    user: data.user,
+                    id: data.id
+                };
+
+                members.push(newMember);
+                member.set(members);
+
+                resolve(newMember);
+            });
+        });
+    },
+    set: function(members) {
+        return new Promise(function(resolve, reject) {
+            localStorage.setItem("member", JSON.stringify(members));
+
+            resolve(members);
+        });
+    }
+};
+
 var board = {
-    get: function(params) {
+    getAvailableProjects: function(user) {
+        return new Promise(function(resolve, reject) {
+            member.get().then(function(members) {
+                var available = members.filter(function(item) {
+                    return item.user === user.email;
+                }).map(function(item) {
+                    return item.id;
+                });
+
+                resolve(available);
+            });
+        });
+    },
+    get: function(query) {
         return new Promise(function(resolve, reject) {
             var delay = Math.floor(Math.random() * 999);
-            var itemsCatalog = JSON.parse(localStorage.getItem(params.key)) || [];
-            var catalog = params.detailsKey ? JSON.parse(localStorage.getItem(params.detailsKey)) : [];
+            var itemsCatalog = JSON.parse(localStorage.getItem(query.key)) || [];
+            var catalog = query.detailsKey ? JSON.parse(localStorage.getItem(query.detailsKey)) : [];
 
-            var details = params.id ? catalog.filter(function(item) { return item.id == params.id; })[0] : null;
-            var items = params.projectId ? itemsCatalog.filter(function(item) {
-                return item.projectId === params.projectId;
-            }) : itemsCatalog;
+            var details = query.id ? catalog.filter(function(item) { return item.id == query.id; })[0] : null;
+            var items = query.projectId ? itemsCatalog.filter(function(item) {
+                return item.projectId === query.projectId;
+            }) : itemsCatalog.filter(function(item) {
+                var match = !query.items || query.items.filter(function(id) {
+                        return item.id == id;
+                    })[0];
+
+                return match;
+            });
 
             setTimeout(function() {
                 resolve({
@@ -29,10 +87,22 @@ var board = {
     },
     add: function(params, data) {
         return new Promise(function(resolve, reject) {
+            if(!data || !data.id) {
+                return resolve(null);
+            }
+
+            if(params.key === "project" && !data.user ) {
+                return resolve(null);
+            }
+
             board.get({key: params.key}).then(function(result) {
                 result.items.push(data);
                 localStorage.setItem(params.key, JSON.stringify(result.items));
 
+                member.add({
+                    user: data.user,
+                    id: data.id
+                });
                 resolve(data);
             });
         });
@@ -102,7 +172,7 @@ var user = {
         return new Promise(function(resolve, reject) {
             user.get().then(function(result) {
                 var target = result.filter(function(item) {
-                    return item.id == query.id;
+                    return item.email == query.email;
                 })[0];
 
                 if(target) {
@@ -139,5 +209,5 @@ var participant = {
 module.exports = {
     board: board,
     user: user,
-    participant: participant
+    member: member
 };

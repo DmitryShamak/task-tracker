@@ -1,34 +1,51 @@
 module.exports = function(template) {
-    return function(participant) {
+    return function(api) {
         return {
             restrict: 'A',
             template: template,
+            scope: {
+                invite: "=",
+                id: "@",
+                target: "@"
+            },
             link: function(scope, element, attr) {
                 scope.users = null;
                 scope.searchResult = null;
+                scope.inviteForm = {};
 
                 scope.get = function() {
                     scope.busy = true;
 
-                    participant.get({
-                        id: attr.id,
-                        target: attr.target
+                    api.member.get({
+                        id: scope.id,
+                        target: scope.target
                     }).then(function(users) {
                         scope.users = users;
 
                         scope.busy = false;
-                        scope.safeApply(scope);
+                        scope.$root.safeApply(scope);
+                    });
+                };
+
+                scope.inviteToProject = function(user, id) {
+                    api.member.add({
+                        user: user,
+                        id: id
+                    }).then(function(result) {
+                        scope.inviteForm = {};
+
+                        scope.$root.safeApply(scope);
                     });
                 };
 
                 scope.search = function(query) {
                     scope.busy = true;
 
-                    return participant.search(query).then(function(result) {
+                    return api.member.get(query).then(function(result) {
                         scope.searchResult = result;
                         scope.busy = false;
 
-                        scope.safeApply(scope);
+                        scope.$root.safeApply(scope);
                     });
                 };
 
